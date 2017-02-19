@@ -1,0 +1,9 @@
+[Core]
+Name = Converter 
+Module = converter 
+
+[Python]
+Version = 2+
+
+[Documentation]
+Description = Converter plugin

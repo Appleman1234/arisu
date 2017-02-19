@@ -1,0 +1,9 @@
+[Core]
+Name = Levenshtein 
+Module = levenshtein 
+
+[Python]
+Version = 2+
+
+[Documentation]
+Description = Levenshtein plugin

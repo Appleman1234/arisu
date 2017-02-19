@@ -1,0 +1,9 @@
+[Core]
+Name = Language 
+Module = language 
+
+[Python]
+Version = 2+
+
+[Documentation]
+Description = Language plugin 

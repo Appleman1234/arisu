@@ -1,0 +1,9 @@
+[Core]
+Name = Stream 
+Module = stream 
+
+[Python]
+Version = 2+
+
+[Documentation]
+Description = Stream plugin 

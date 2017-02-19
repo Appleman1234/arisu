@@ -1,0 +1,9 @@
+[Core]
+Name = Karma 
+Module = karma 
+
+[Python]
+Version = 2+
+
+[Documentation]
+Description = Karma plugin

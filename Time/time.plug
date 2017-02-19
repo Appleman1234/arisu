@@ -1,0 +1,9 @@
+[Core]
+Name = Time 
+Module = time 
+
+[Python]
+Version = 2+
+
+[Documentation]
+Description = Time plugin 

@@ -1,0 +1,9 @@
+[Core]
+Name = NumberSpell 
+Module = numberspell 
+
+[Python]
+Version = 2+
+
+[Documentation]
+Description = NumberSpell plugin 
