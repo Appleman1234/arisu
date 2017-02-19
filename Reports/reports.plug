@@ -1,0 +1,9 @@
+[Core]
+Name = Reports 
+Module = reports 
+
+[Python]
+Version = 2+
+
+[Documentation]
+Description = Reports plugin displays reports of posts from lainchan
