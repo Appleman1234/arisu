@@ -14,10 +14,14 @@ class Seen(BotPlugin):
         delta = dateutil.relativedelta.relativedelta(time1, time2)
         attrs = ['years', 'months', 'days', 'hours', 'minutes', 'seconds']
         statements = ['%d %s' % (getattr(delta, attr), getattr(delta, attr) != 1 and attr or attr[:-1]) for attr in attrs if getattr(delta, attr)]
-
-        if len(statements) > 1:
-            statements[-1] = "and {0}".format(statements[-1])
-        return ', '.join(statements)
+        offset = ""
+       	if len(statements) == 0:
+            offset = "just now"
+        else:
+            if len(statements) > 1:
+                 statements[-1] = "and {0}".format(statements[-1])
+            offset = ", ".join(statements)
+        return offset		
 
     def get_seen_record(self,who,channel):
         """Get seen record for specific user.
@@ -29,10 +33,6 @@ class Seen(BotPlugin):
         if channel in self:
             if who in self[channel]:
                 value = self[channel][who]
-            else:
-                self[channel] = { who : {} } 
-        else:
-            self[channel] = { who : {} } 
         return value
     
     def update_seen_record(self,who,channel,message,time):
@@ -44,7 +44,10 @@ class Seen(BotPlugin):
         :time time of last message
 
         """
-        d = self[channel]
+        if channel in self:
+            d = self[channel]
+        else:
+            d = { who : {} }
         d[who] = { "message" : message , "time" : time }
         self[channel] = d 
 
@@ -76,7 +79,7 @@ class Seen(BotPlugin):
             seen_record = self.get_seen_record(who,channel)
         if seen_record:
             message = seen_record["message"]
-            interval = self.human_readable_offset(seen_record["time"],datetime.datetime.now()) + " ago" 
+            interval = self.human_readable_offset(datetime.datetime.now(),seen_record["time"])   
             result = "%s was last seen in %s %s saying %s" % (who,channel, interval,message)
         return result
 
