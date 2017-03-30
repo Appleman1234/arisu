@@ -63,7 +63,8 @@ class Seen(BotPlugin):
 
     def get_seen(self, msg, args):
     # Get user, get channel specifier
-        if len(args) == 1:
+        who = None
+        if len(args) >= 1:
             if len(args[0]) == 0:
                 who = msg.frm.nick
             else:
@@ -74,8 +75,12 @@ class Seen(BotPlugin):
         if hasattr(msg.to, 'room'):
             channel = msg.to.room
         
-        result = "%s has never been seen" % (who)
-        if channel is not None:
+        if who is not None:  
+            result = "%s has never been seen" % (who)
+        else:
+            result = "Just exactly who are you looking for ?"
+
+        if channel is not None and who is not None:
             seen_record = self.get_seen_record(who,channel)
         if seen_record:
             message = seen_record["message"]
