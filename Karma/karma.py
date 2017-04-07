@@ -37,7 +37,7 @@ class Karma(BotPlugin):
 
         """
         value = self.get_value_type(who,value_type)
-        value = int(value) if value else 0
+        value = int(value) 
         try:
             if method == '+':
                 d = self[value_type]
@@ -161,7 +161,7 @@ class Karma(BotPlugin):
             if who in self[value_type]:
                 value = self[value_type][who]
             else:
-                self[value_type] = { who : value } 
+                self[value_type][who] = value 
             
         else:
             self[value_type] = { who : value } 
