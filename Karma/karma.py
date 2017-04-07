@@ -79,11 +79,6 @@ class Karma(BotPlugin):
         """
         try:
             who = msg.body.split(method)[0].strip().split().pop()
-            #. check if nickname only contain [a-Z_]
-            for s in who:
-                if s not in "%s_" % string.ascii_letters:
-                    who = None
-                    break
         except Exception as e:
             self.log.debug("parse message fail - %s." % (e))
             return None
@@ -231,28 +226,28 @@ class Karma(BotPlugin):
             else:
                 self.update_value_for_status_type(mess,'language', self.parse_demote, self.demote_value_type)
 
-    @re_botcmd(pattern=r'^[\w][\S]+[がは]?(紳士|(変態|へんたい|ロリコン)(では|じゃ)?([な無]い|[あ有]りません))',prefixed=False)
+    @re_botcmd(pattern=r'^[[\w][\S]+[がは]?(紳士|(変態|へんたい|ロリコン)(では|じゃ)?([な無]い|[あ有]りません))',prefixed=False)
     def demote_hentai(self, msg, args):
         """Command to lower the hentai point status for specific user""" 
         return self.update_value_for_status_type(msg,'hentai', self.parse_hentai_demote, self.demote_value_type)
 
-    @re_botcmd(pattern=r'^[\w][\S]+の?(変態|へんたい)',prefixed=False)
+    @re_botcmd(pattern=r'^[[\w][\S]+の?(変態|へんたい)',prefixed=False)
     def promote_hentai(self, msg, args):
         """Command to raise the hentai point status for specific user""" 
         return self.update_value_for_status_type(msg,'hentai', self.parse_hentai_promote, self.promote_value_type)
 
-    @re_botcmd(pattern=r'^[\w][\S]+の?ロリコン',prefixed=False)
+    @re_botcmd(pattern=r'^[[\w][\S]+の?ロリコン',prefixed=False)
     def promote_hentai_large(self, msg, args):
         """Command to raise the hentai point status for specific user significantly"""
         return self.update_value_for_status_type(msg,'hentai', self.parse_hentai_promote, self.promote_value_type)
 
-    @re_botcmd(pattern=r'^[\w][\S]+[\+]{2}',prefixed=False)
+    @re_botcmd(pattern=r'^[[\w][\S]+[\+]{2}',prefixed=False)
     def promote_karma(self,msg, args):
         """Update karma status for specific user if get '++' message."""
         return self.update_value_for_status_type(msg,'karma', self.parse_promote, self.promote_value_type)
 
-    @re_botcmd(pattern=r'^[\w][\S]+[\-]{2}',prefixed=False)
-    def meet_demote_karma(self,msg, args):
+    @re_botcmd(pattern=r'^[[\w][\S]+[\-]{2}',prefixed=False)
+    def demote_karma(self,msg, args):
         """Update karma status for specific user if get '--' message."""
         return self.update_value_for_status_type(msg,'karma', self.parse_demote, self.demote_value_type)
 
