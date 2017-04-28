@@ -10,7 +10,7 @@ import json
 
 japanese_regex = re.compile(r'[\u3040-\u30FF\u4E00-\u9FC2\uFF61-\uFF9D\u31F0-\u31FF\u3000-\u303F]',re.UNICODE)
 command_regex = re.compile('^\!\w')
-CONFIG_TEMPLATE = {'byself': False,'feedback' : True }
+CONFIG_TEMPLATE = {'byself': False,'feedback' : True, 'numberspell': False }
 
 
 class Karma(BotPlugin):
@@ -79,6 +79,7 @@ class Karma(BotPlugin):
         """
         try:
             who = msg.body.split(method)[0].strip().split().pop()
+            who = who.rstrip('がは紳士変態へんたいロリコンではじゃな無いあ有りません')
         except Exception as e:
             self.log.debug("parse message fail - %s." % (e))
             return None
@@ -117,7 +118,7 @@ class Karma(BotPlugin):
         :returns: who,method,amount
 
         """
-        return _parse_msg(msg,3, method='-')
+        return self._parse_msg(msg,3, method='-')
 
     def get_reply_message(self,value_type,sender,who,value,delta):
         """ Get message to reply to value change
@@ -184,8 +185,11 @@ class Karma(BotPlugin):
                     result = "%s doesn't seem to be a pervert." % who
             else:
                 pm = self._bot.plugin_manager
-                numberspell = pm.get_plugin_obj_by_name('NumberSpell')
-                result = "%s's %s points are : %s" % (who, value_type,numberspell.get_spelling_for_number(value))
+                if self.config['numberspell']:
+                    numberspell = pm.get_plugin_obj_by_name('NumberSpell')
+                    result = "%s's %s points are : %s" % (who, value_type,numberspell.get_spelling_for_number(value))
+                else:
+                    result = "%s's %s points are : %s" % (who, value_type,value)
         else:
             if value_type == "karma":
                 command = "karma"
@@ -231,12 +235,12 @@ class Karma(BotPlugin):
         """Command to lower the hentai point status for specific user""" 
         return self.update_value_for_status_type(msg,'hentai', self.parse_hentai_demote, self.demote_value_type)
 
-    @re_botcmd(pattern=r'^[[\w][\S]+の?(変態|へんたい)',prefixed=False)
+    @re_botcmd(pattern=r'^[[\w][\S]+の?(変態|へんたい)$',prefixed=False)
     def promote_hentai(self, msg, args):
         """Command to raise the hentai point status for specific user""" 
         return self.update_value_for_status_type(msg,'hentai', self.parse_hentai_promote, self.promote_value_type)
 
-    @re_botcmd(pattern=r'^[[\w][\S]+の?ロリコン',prefixed=False)
+    @re_botcmd(pattern=r'^[[\w][\S]+の?ロリコン$',prefixed=False)
     def promote_hentai_large(self, msg, args):
         """Command to raise the hentai point status for specific user significantly"""
         return self.update_value_for_status_type(msg,'hentai', self.parse_hentai_promote, self.promote_value_type)
