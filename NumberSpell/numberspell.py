@@ -19,10 +19,13 @@ class NumberSpell(BotPlugin):
         response = requests.get(url)
         soup = BeautifulSoup(response.content,"lxml")
         results = soup.find_all("td")
-        kanji = str(results[3].string)
-        if number[0] == "-":
-            kanji = u"\u30de\u30a4\u30ca\u30b9" + kanji[2:]
-        kana = str(results[4].string)
+        kanji = ""
+        kana  = ""
+        if results > 4:
+            kanji = str(results[3].string)
+            if number[0] == "-":
+                kanji = u"\u30de\u30a4\u30ca\u30b9" + kanji[2:]
+                kana = str(results[4].string)
         resultstring = kanji.strip("\n") + " (" + kana.strip("\n")+ ")"
         return resultstring
 
