@@ -79,7 +79,7 @@ class Karma(BotPlugin):
         """
         try:
             who = msg.body.split(method)[0].strip().split().pop()
-            who = who.rstrip('がは紳士変態へんたいロリコンではじゃな無いあ有りません')
+            who = who.rstrip('のがは紳士変態へんたいロリコンではじゃな無いあ有りません')
         except Exception as e:
             self.log.debug("parse message fail - %s." % (e))
             return None
