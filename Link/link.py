@@ -62,7 +62,9 @@ class Link(BotPlugin):
             if len(no_embed_title) == 0:
                return_message += normal_title
             else:
-               if contains_twitter:
+               if "lainchan.org/mod.php" in url and "Login" in normal_title:
+                   pass
+               elif contains_twitter:
                    return_message += normal_title
                else:
                    return_message += no_embed_title
